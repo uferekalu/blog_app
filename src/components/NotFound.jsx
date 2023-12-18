@@ -1,7 +1,7 @@
-import React from "react";
-import BlogPost from "./blogPost";
+import React from 'react'
+import BlogPost from './blogPost'
 
-const NotFound = () => {
+function NotFound() {
   return (
     <div>
       <BlogPost
@@ -11,7 +11,7 @@ const NotFound = () => {
       <h1>404 - Not Found</h1>
       <p>Sorry, the page you are looking for might not exist.</p>
     </div>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound
