@@ -17,7 +17,7 @@ function Layout({ children }) {
 
 // Define propTypes for the Layout component
 Layout.propTypes = {
-  children: PropTypes.node.isRequired, // Ensure that 'children' is a node and is required
+  children: PropTypes.node.isRequired,
 }
 
 export default Layout
