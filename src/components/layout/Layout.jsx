@@ -1,9 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types' // Import PropTypes
+
 import classes from './Layout.module.scss'
 import Header from '../header/Header'
 import Footer from '../footer/Footer'
 
-const Layout = ({ children }) => {
+function Layout({ children }) {
   return (
     <>
       <Header />
@@ -11,6 +13,11 @@ const Layout = ({ children }) => {
       <Footer />
     </>
   )
+}
+
+// Define propTypes for the Layout component
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
 }
 
 export default Layout
