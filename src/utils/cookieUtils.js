@@ -24,7 +24,6 @@ export const clearCookie = (name) => {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
 }
 
-
 export const isTokenExpired = () => {
   const token = getCookie('token')
   const expiration = getCookie('token_expiration')
@@ -35,4 +34,27 @@ export const isTokenExpired = () => {
 
   const expirationDate = new Date(expiration)
   return expirationDate < new Date() // Check if the token has expired
+}
+
+export function parseTokenExpiration(token) {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const expirationTimestamp = payload.exp;
+
+    if (!expirationTimestamp) {
+      return null; // Token doesn't contain an expiration claim
+    }
+
+    const currentTimestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
+
+    if (currentTimestamp > expirationTimestamp) {
+      return null; // Token has expired
+    }
+
+    // Return the expiration timestamp if the token is still valid
+    return expirationTimestamp;
+  } catch (error) {
+    console.error("Error parsing token:", error);
+    return null; // Error occurred while parsing
+  }
 }

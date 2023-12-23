@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 
 .create__signup {
-    display: block;
+  display: block;
 }
 
 .signup__form {
@@ -10,5 +10,11 @@
 
   &__input__file {
     display: none;
+  }
+
+  &__errors {
+    font-size: 12px;
+    color: red;
+    font-style: italic;
   }
 }

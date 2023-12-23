@@ -4,7 +4,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import baseUrl from './api'
+import { baseUrl } from './api'
 
 const authSlice = createSlice({
   name: 'auth',
@@ -56,6 +56,14 @@ export const selectIsAuthenticated = (state) => state.auth.isAuthenticated
 export const selectSignUpError = (state) => state.auth.signUpError
 export const selectSignInError = (state) => state.auth.signInError
 export const selectSignUpSuccess = (state) => state.auth.selectSignUpSuccess
+
+export const signOut = () => (dispatch) => {
+  // Clear the token from the state
+  dispatch(clearToken());
+
+  // Remove the token cookie
+  document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+};
 
 export const signUp = (userData) => async (dispatch) => {
   try {

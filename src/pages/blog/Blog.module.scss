@@ -1,0 +1,10 @@
+@import '../../styles/variables.scss';
+
+.blog {
+    display: flex;
+    flex-direction: column;
+
+    &__signout {
+        display: flex;
+    }
+}

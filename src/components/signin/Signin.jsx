@@ -54,6 +54,11 @@ function SigninModal({ createSignin, setCreateSignin }) {
       <Modal.Body className={classes.signin}>
         <motion.form className={classes.signin__form}>
           <h2 className={classes.signin__form__heading}>Signin</h2>
+          {auth?.signInError && (
+            <motion.span className={classes.signin__form__errors}>
+              {auth.signInError}
+            </motion.span>
+          )}
           <AnimatedInput
             type="text"
             placeholder="Username"

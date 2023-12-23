@@ -66,6 +66,11 @@ function SignupModal({ createSignup, setCreateSignup, setCreateSignin }) {
           encType="multipart/form-data"
         >
           <h2 className={classes.signup__form__heading}>Signup</h2>
+          {auth?.signInError && (
+            <motion.span className={classes.signup__form__errors}>
+              {auth.signUpError}
+            </motion.span>
+          )}
           <AnimatedInput
             type="text"
             placeholder="Username"

@@ -1,14 +1,16 @@
 @import '../../styles/variables.scss';
 
 .create__signin {
-    display: block;
+  display: block;
 }
 
 .signin__form {
   display: flex;
   flex-direction: column;
 
-  &__input__file {
-    display: none;
+  &__errors {
+    font-size: 12px;
+    color: red;
+    font-style: italic;
   }
 }
