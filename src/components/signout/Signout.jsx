@@ -5,14 +5,13 @@ import PropTypes from 'prop-types'
 import { signOut } from '../../slices/authSlice'
 import AnimatedButton from '../button/AnimatedButton'
 
-
 function SignOutButton({ className }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleSignOut = () => {
     dispatch(signOut())
-    navigate("/")
+    navigate('/')
   }
 
   return (

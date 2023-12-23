@@ -59,29 +59,27 @@ export const selectSignUpSuccess = (state) => state.auth.selectSignUpSuccess
 
 export const signOut = () => (dispatch) => {
   // Clear the token from the state
-  dispatch(clearToken());
+  dispatch(clearToken())
 
   // Remove the token cookie
-  document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-};
+  document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+}
 
 export const signUp = (userData) => async (dispatch) => {
   try {
-    const response = await axios.post(`${baseUrl}/users/signup`, userData);
+    const response = await axios.post(`${baseUrl}/users/signup`, userData)
 
     if (response.status >= 200 && response.status < 300) {
-      const { message } = response.data;
-      dispatch(setSignUpSuccess(message));
+      const { message } = response.data
+      dispatch(setSignUpSuccess(message))
     } else {
-      const { error } = response.data;
-      dispatch(setSignUpError(error));
+      const { error } = response.data
+      dispatch(setSignUpError(error))
     }
   } catch (error) {
-    console.error('Error during signup:', error);
-    dispatch(setSignUpError('An error occurred during signup.'));
+    dispatch(setSignUpError('An error occurred during signup.'))
   }
-};
-
+}
 
 export const signIn = (userData) => async (dispatch) => {
   try {
@@ -106,7 +104,6 @@ export const signIn = (userData) => async (dispatch) => {
     }
   } catch (error) {
     // Handle network errors or other issues
-    console.error('Error during sign in:', error)
     dispatch(setSignInError('An error occurred during sign in.'))
   }
 }

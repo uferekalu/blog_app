@@ -12,7 +12,7 @@ import classes from './CreateCategory.module.scss'
 
 function CreateCategoryModal({ createCat, setCreateCat }) {
   const [categoryData, setCategoryData] = useState({
-    name: ''
+    name: '',
   })
   const dispatch = useDispatch()
   const category = useSelector((state) => state.createCategory)
@@ -31,7 +31,7 @@ function CreateCategoryModal({ createCat, setCreateCat }) {
   const handleCreateCategory = async (e) => {
     e.preventDefault()
     const data = {
-        name: categoryData.name
+      name: categoryData.name,
     }
 
     dispatch(createCategory(data))
@@ -47,9 +47,7 @@ function CreateCategoryModal({ createCat, setCreateCat }) {
       className={classes.create__category}
     >
       <Modal.Body className={classes.category}>
-        <motion.form
-          className={classes.category__form}
-        >
+        <motion.form className={classes.category__form}>
           <h2 className={classes.category__form__heading}>Create Category</h2>
           <AnimatedInput
             type="text"
@@ -58,7 +56,7 @@ function CreateCategoryModal({ createCat, setCreateCat }) {
             value={categoryData.name}
             onChange={handleInputChange}
             className={classes.category__form__input__name}
-          />         
+          />
           <AnimatedButton
             text="Submit"
             type="submit"

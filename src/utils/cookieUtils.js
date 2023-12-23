@@ -38,23 +38,22 @@ export const isTokenExpired = () => {
 
 export function parseTokenExpiration(token) {
   try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    const expirationTimestamp = payload.exp;
+    const payload = JSON.parse(atob(token.split('.')[1]))
+    const expirationTimestamp = payload.exp
 
     if (!expirationTimestamp) {
-      return null; // Token doesn't contain an expiration claim
+      return null // Token doesn't contain an expiration claim
     }
 
-    const currentTimestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
+    const currentTimestamp = Math.floor(Date.now() / 1000) // Current timestamp in seconds
 
     if (currentTimestamp > expirationTimestamp) {
-      return null; // Token has expired
+      return null // Token has expired
     }
 
     // Return the expiration timestamp if the token is still valid
-    return expirationTimestamp;
+    return expirationTimestamp
   } catch (error) {
-    console.error("Error parsing token:", error);
-    return null; // Error occurred while parsing
+    return null // Error occurred while parsing
   }
 }

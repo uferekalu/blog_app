@@ -2,13 +2,12 @@
 // src/store/index.js
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { configureStore } from '@reduxjs/toolkit'
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension'
 import authReducer from '../slices/authSlice'
 import getBlogPostsReducer from '../slices/getBlogPostsSlice'
 import createCategoryReducer from '../slices/createCategorySlice'
 
-const composedEnhancer = composeWithDevTools({
-});
+const composedEnhancer = composeWithDevTools({})
 
 const store = configureStore({
   reducer: {
