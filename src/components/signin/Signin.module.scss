@@ -1,0 +1,14 @@
+@import '../../styles/variables.scss';
+
+.create__signin {
+    display: block;
+}
+
+.signin__form {
+  display: flex;
+  flex-direction: column;
+
+  &__input__file {
+    display: none;
+  }
+}
