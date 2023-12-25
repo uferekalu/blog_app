@@ -2,21 +2,24 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import PropTypes from 'prop-types'
 
-function AnimatedSelect({ options, onSelect, className }) {
+function AnimatedSelect({ text, options, onChange, className }) {
   return (
-    <motion.select
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      onChange={(e) => onSelect(e.target.value)}
-      className={className}
-    >
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </motion.select>
+    <div>
+      <motion.select
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        onChange={onChange}
+        className={className}
+      >
+        <option value="">{text}</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </motion.select>
+    </div>
   )
 }
 
@@ -27,13 +30,15 @@ AnimatedSelect.propTypes = {
       label: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  onSelect: PropTypes.func,
+  onChange: PropTypes.func,
   className: PropTypes.string,
+  text: PropTypes.string,
 }
 
 AnimatedSelect.defaultProps = {
-  onSelect: () => {},
+  onChange: () => {},
   className: '',
+  text: 'Authenticate',
 }
 
 export default AnimatedSelect

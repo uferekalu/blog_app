@@ -10,6 +10,9 @@ const initialState = {
   isSearch: false,
   searchValue: '',
   isMenuOpen: false,
+  createSignup: false,
+  createSignin: false,
+  authenticateOption: '',
 }
 
 const reducer = (state, action) => {
@@ -28,6 +31,21 @@ const reducer = (state, action) => {
       return {
         ...state,
         isMenuOpen: action.payload,
+      }
+    case 'SET_CREATE_SIGNUP':
+      return {
+        ...state,
+        createSignup: action.payload,
+      }
+    case 'SET_CREATE_SIGNIN':
+      return {
+        ...state,
+        createSignin: action.payload,
+      }
+    case 'SET_AUTHENTICATE_OPTION':
+      return {
+        ...state,
+        authenticateOption: action.payload,
       }
     default:
       return state
