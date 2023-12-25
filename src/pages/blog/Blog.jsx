@@ -12,7 +12,6 @@ import SignOutButton from '../../components/signout/Signout'
 function Blog() {
   const [authenticatedUser, setAuthenticatedUser] = useState()
   const [createCat, setCreateCat] = useState(false)
-  console.log('authenticated user', authenticatedUser)
   const token = useMemo(() => getCookie('token'), [])
   const tokenExpiration = useMemo(
     () => (token ? parseTokenExpiration(token) : ''),

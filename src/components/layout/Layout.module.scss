@@ -1,0 +1,11 @@
+@import '../../styles//variables.scss';
+
+.layout {
+  background-color: $bg;
+  width: 100%;
+  font-family: $Poppins;
+  color: $lightText;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
