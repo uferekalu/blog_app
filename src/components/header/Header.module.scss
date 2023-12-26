@@ -109,6 +109,7 @@
       height: 90vh;
       background-size: cover;
       background-position: center;
+      z-index: 100;
 
       &__container {
         display: flex;

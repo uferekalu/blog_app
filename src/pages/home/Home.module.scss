@@ -1,0 +1,70 @@
+@import '../../styles/variables.scss';
+
+.homepage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 30px;
+  height: 70vh;
+  margin-top: 30px;
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    height: 110vh;
+  }
+
+  &__hero__content {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    color: white;
+    padding: 10px;
+    border-radius: $borderRadius;
+
+    &__featured__post {
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    &__caption {
+      font-size: 30px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    &__details {
+      font-size: 14px;
+      margin-top: 30px;
+      text-align: justify;
+    }
+
+    &__readmore {
+      background-color: rgb(233, 239, 239);
+      color: black;
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      width: 50%;
+      margin-top: 40px;
+    }
+  }
+
+  &__hero__pic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    height: 100%;
+
+    &__img {
+      @media (max-width: 767px) {
+        width: 220px;
+        height: 220px;
+      }
+      width: 300px;
+      height: 300px;
+    }
+  }
+}

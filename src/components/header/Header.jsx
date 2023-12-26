@@ -107,10 +107,12 @@ function Header() {
         transition={{ duration: 0.5 }}
         className={classes.header__logo__container}
       >
-        <img
+        <motion.img
           src={logo}
           alt="logo"
           className={classes.header__logo__container__img}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
         />
       </motion.div>
       <motion.div
