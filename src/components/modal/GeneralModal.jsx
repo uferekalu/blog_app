@@ -1,10 +1,19 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import classes from './GeneralModal.module.scss'
 
-function GeneralModal({ size, children, onHide, show, className }) {
+function GeneralModal({
+  size,
+  children,
+  onHide,
+  show,
+  className,
+  style,
+  style1,
+}) {
   return (
     <Modal
       size={size}
@@ -12,9 +21,11 @@ function GeneralModal({ size, children, onHide, show, className }) {
       dialogClassName={classes.modal}
       onHide={onHide}
       show={show}
-      className={className}
+      style={style1}
     >
-      <Modal.Body>{children}</Modal.Body>
+      <Modal.Body className={className} style={style}>
+        {children}
+      </Modal.Body>
     </Modal>
   )
 }
@@ -25,6 +36,13 @@ GeneralModal.propTypes = {
   onHide: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   className: PropTypes.string.isRequired,
+  style: PropTypes.object,
+  style1: PropTypes.object,
+}
+
+GeneralModal.defaultProps = {
+  style: {},
+  style1: {},
 }
 
 export default GeneralModal

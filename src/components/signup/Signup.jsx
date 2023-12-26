@@ -9,6 +9,7 @@ import classes from './Signup.module.scss'
 import { signUp } from '../../slices/authSlice'
 import AnimatedInput from '../input/AnimatedInput'
 import AnimatedButton from '../button/AnimatedButton'
+import signupBg from '../../images/signup.jpg'
 
 function SignupModal({ createSignup, setCreateSignup, setCreateSignin }) {
   const auth = useSelector((state) => state.auth)
@@ -59,13 +60,31 @@ function SignupModal({ createSignup, setCreateSignup, setCreateSignin }) {
         setCreateSignup(false)
       }}
       className={classes.create__signup}
+      style={{ backgroundImage: `url(${signupBg})` }}
+      style1={{
+        marginTop: '10vh',
+      }}
     >
       <Modal.Body className={classes.signup}>
         <motion.form
           className={classes.signup__form}
           encType="multipart/form-data"
         >
-          <h2 className={classes.signup__form__heading}>Signup</h2>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className={classes.signup__form__heading__container}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className={classes.signup__form__heading__container__text}
+            >
+              Signup
+            </motion.div>
+          </motion.div>
           {auth?.signInError && (
             <motion.span className={classes.signup__form__errors}>
               {auth.signUpError}
@@ -97,14 +116,14 @@ function SignupModal({ createSignup, setCreateSignup, setCreateSignin }) {
             <AnimatedButton
               text="Choose File"
               onClick={handleChooseFileClick}
-              className={classes.signup__form__choosefile__btn}
+              className={classes.signup__form__choosefile__holder__btn}
               type="button"
             />
             <motion.span
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className={classes.signup__form__selected__file}
+              className={classes.signup__form__choosefile__holder__file}
             >
               {image ? image.name : 'No file selected'}
             </motion.span>
@@ -113,7 +132,7 @@ function SignupModal({ createSignup, setCreateSignup, setCreateSignin }) {
             text="Submit"
             type="submit"
             onClick={handleSignUp}
-            className={classes.signup__form__btn__submit}
+            className={classes.signup__form__submit__btn}
           />
         </motion.form>
       </Modal.Body>

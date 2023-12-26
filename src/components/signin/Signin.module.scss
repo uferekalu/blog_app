@@ -2,15 +2,66 @@
 
 .create__signin {
   display: block;
+  border-radius: $borderRadius;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .signin__form {
   display: flex;
   flex-direction: column;
+  gap: 15px;
 
   &__errors {
     font-size: 12px;
     color: red;
     font-style: italic;
+  }
+
+  &__heading__container {
+    display: flex;
+    justify-content: center;
+    // padding: 5px;
+    border-radius: $borderRadius;
+    margin-bottom: 12px;
+
+    &__text {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 14px;
+      background: white;
+      padding: 10px;
+      border-radius: $borderRadius;
+      position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        // background: linear-gradient(45deg, #e0e0e0, #ffffff);
+        border-radius: 8px;
+        z-index: -1;
+      }
+    }
+  }
+  &__input__name,
+  &__input__password {
+    padding: 10px;
+    border-radius: $borderRadius;
+    border: none;
+    font-size: 14px;
+  }
+
+  &__submit__btn {
+    background-color: rgb(233, 239, 239);
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
   }
 }

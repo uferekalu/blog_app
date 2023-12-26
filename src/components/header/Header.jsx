@@ -20,7 +20,7 @@ import AnimatedSelect from '../select/AnimatedSelect'
 import SignupModal from '../signup/Signup'
 import SigninModal from '../signin/Signin'
 import { getCookie, parseTokenExpiration } from '../../utils/cookieUtils'
-import { signOut } from '../../slices/authSlice'
+import { clearToken, signOut } from '../../slices/authSlice'
 import SignOutButton from '../signout/Signout'
 
 function Header() {
@@ -42,6 +42,13 @@ function Header() {
       navigate('/')
     }
   }, [appDispatch, navigate, state.authenticateOption])
+
+  useEffect(() => {
+    if (state.authenticateOption === 'signout') {
+      appDispatch(clearToken())
+      navigate('/')
+    }
+  }, [appDispatch, navigate, state.authenticateOption, token])
 
   useEffect(() => {
     handleSignout()

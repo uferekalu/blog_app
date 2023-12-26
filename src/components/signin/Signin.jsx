@@ -10,6 +10,7 @@ import classes from './Signin.module.scss'
 import { signIn } from '../../slices/authSlice'
 import AnimatedInput from '../input/AnimatedInput'
 import AnimatedButton from '../button/AnimatedButton'
+import signupBg from '../../images/signup.jpg'
 
 function SigninModal({ createSignin, setCreateSignin }) {
   const navigate = useNavigate()
@@ -50,10 +51,28 @@ function SigninModal({ createSignin, setCreateSignin }) {
         setCreateSignin(false)
       }}
       className={classes.create__signin}
+      style={{ backgroundImage: `url(${signupBg})` }}
+      style1={{
+        marginTop: '10vh',
+      }}
     >
       <Modal.Body className={classes.signin}>
         <motion.form className={classes.signin__form}>
-          <h2 className={classes.signin__form__heading}>Signin</h2>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className={classes.signin__form__heading__container}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className={classes.signin__form__heading__container__text}
+            >
+              Signin
+            </motion.div>
+          </motion.div>
           {auth?.signInError && (
             <motion.span className={classes.signin__form__errors}>
               {auth.signInError}
@@ -79,7 +98,7 @@ function SigninModal({ createSignin, setCreateSignin }) {
             text="Submit"
             type="submit"
             onClick={handleSignin}
-            className={classes.signin__form__btn__submit}
+            className={classes.signin__form__submit__btn}
           />
         </motion.form>
       </Modal.Body>
