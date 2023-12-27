@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, {
   useCallback,
   useContext,
@@ -6,7 +7,7 @@ import React, {
   useState,
 } from 'react'
 import { motion } from 'framer-motion'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 import classes from './Header.module.scss'
@@ -22,6 +23,11 @@ import SigninModal from '../signin/Signin'
 import { getCookie, parseTokenExpiration } from '../../utils/cookieUtils'
 import { clearToken, signOut } from '../../slices/authSlice'
 import SignOutButton from '../signout/Signout'
+import CreateCategoryModal from '../category/CreateCategory'
+import CreateTagModal from '../tag/CreateTagModal'
+import { fetchTags } from '../../slices/getTagsSlice'
+import { fetchCategories } from '../../slices/getCategoriesSlice'
+import CreatePostModal from '../postmodal/CreatePostModal'
 
 function Header() {
   const appDispatch = useDispatch()
@@ -29,12 +35,29 @@ function Header() {
   const { state, dispatch } = useContext(AppContext)
   const [createSignup, setCreateSignup] = useState(false)
   const [createSignin, setCreateSignin] = useState(false)
+  const [createPost, setCreatePost] = useState(false)
+  const [createCat, setCreateCat] = useState(false)
+  const [createTag, setCreateTag] = useState(false)
   const [authenticatedUser, setAuthenticatedUser] = useState()
   const token = useMemo(() => getCookie('token'), [])
   const tokenExpiration = useMemo(
     () => (token ? parseTokenExpiration(token) : ''),
     [token],
   )
+  const tags = useSelector((state) => state.tags)
+  const categories = useSelector((state) => state.categories)
+  const modifiedCategories = useMemo(() => {
+    const result = categories?.categories.map((cat) => ({
+      value: cat?.id.toString(),
+      label: cat?.name,
+    }))
+    return result
+  }, [categories])
+
+  useEffect(() => {
+    appDispatch(fetchTags())
+    appDispatch(fetchCategories())
+  }, [appDispatch])
 
   const handleSignout = useCallback(() => {
     if (state.authenticateOption === 'signout') {
@@ -87,6 +110,18 @@ function Header() {
     }
   }, [state.authenticateOption])
 
+  const handleCreateBlogPost = useCallback(() => {
+    if (state.authenticateOption === 'post') {
+      setCreatePost(true)
+    }
+  }, [state.authenticateOption])
+
+  const handleCreateCategory = useCallback(() => {
+    if (state.authenticateOption === 'category') {
+      setCreateCat(true)
+    }
+  }, [state.authenticateOption])
+
   const handleCreateSignin = useCallback(() => {
     if (state.authenticateOption === 'signin') {
       setCreateSignin(true)
@@ -94,10 +129,25 @@ function Header() {
     }
   }, [state.authenticateOption])
 
+  const handleCreateTag = useCallback(() => {
+    if (state.authenticateOption === 'tag') {
+      setCreateTag(true)
+    }
+  }, [state.authenticateOption])
+
   useEffect(() => {
     handleCreateSignup()
     handleCreateSignin()
-  }, [handleCreateSignup, handleCreateSignin])
+    handleCreateCategory()
+    handleCreateTag()
+    handleCreateBlogPost()
+  }, [
+    handleCreateSignup,
+    handleCreateSignin,
+    handleCreateCategory,
+    handleCreateTag,
+    handleCreateBlogPost,
+  ])
 
   return (
     <motion.div className={classes.header}>
@@ -346,7 +396,7 @@ function Header() {
                     className={
                       classes.header__mobile__menucontent__container__btn
                     }
-                    onClick={() => {}}
+                    onClick={() => setCreateCat(true)}
                   />
                   <AnimatedButton
                     type="button"
@@ -354,7 +404,7 @@ function Header() {
                     className={
                       classes.header__mobile__menucontent__container__btn
                     }
-                    onClick={() => {}}
+                    onClick={() => setCreateTag(true)}
                   />
                   <AnimatedButton
                     type="button"
@@ -362,7 +412,7 @@ function Header() {
                     className={
                       classes.header__mobile__menucontent__container__btn
                     }
-                    onClick={() => {}}
+                    onClick={() => setCreatePost(true)}
                   />
                   <SignOutButton
                     className={
@@ -394,6 +444,14 @@ function Header() {
       <SigninModal
         createSignin={createSignin}
         setCreateSignin={setCreateSignin}
+      />
+      <CreateCategoryModal createCat={createCat} setCreateCat={setCreateCat} />
+      <CreateTagModal createTag={createTag} setCreateTag={setCreateTag} />
+      <CreatePostModal
+        createPost={createPost}
+        setCreatePost={setCreatePost}
+        categories={modifiedCategories}
+        tags={tags?.tags}
       />
     </motion.div>
   )

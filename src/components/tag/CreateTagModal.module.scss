@@ -1,13 +1,13 @@
 @import '../../styles/variables.scss';
 
-.create__category {
+.create__tag {
   display: block;
   border-radius: $borderRadius;
   background-size: cover;
   background-position: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
-.category__form {
+.tag__form {
   display: flex;
   flex-direction: column;
   gap: 15px;

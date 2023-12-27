@@ -6,6 +6,10 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import authReducer from '../slices/authSlice'
 import getBlogPostsReducer from '../slices/getBlogPostsSlice'
 import createCategoryReducer from '../slices/createCategorySlice'
+import createTagReducer from '../slices/createTagSlice'
+import createBlogPostReducer from '../slices/createBlogPostSlice'
+import getTagsReducer from '../slices/getTagsSlice'
+import getCategoriesReducer from '../slices/getCategoriesSlice'
 
 const composedEnhancer = composeWithDevTools({})
 
@@ -14,6 +18,10 @@ const store = configureStore({
     auth: authReducer,
     blog: getBlogPostsReducer,
     createCategory: createCategoryReducer,
+    createTag: createTagReducer,
+    createBlogPost: createBlogPostReducer,
+    tags: getTagsReducer,
+    categories: getCategoriesReducer,
     enhancers: [composedEnhancer],
   },
   devTools: true,

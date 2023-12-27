@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import PropTypes from 'prop-types'
 
-function AnimatedSelect({ text, options, onChange, className }) {
+function AnimatedSelect({ text, options, onChange, className, name }) {
   return (
     <div>
       <motion.select
@@ -11,6 +11,7 @@ function AnimatedSelect({ text, options, onChange, className }) {
         transition={{ duration: 0.5 }}
         onChange={onChange}
         className={className}
+        name={name}
       >
         <option value="">{text}</option>
         {options.map((option) => (
@@ -33,12 +34,14 @@ AnimatedSelect.propTypes = {
   onChange: PropTypes.func,
   className: PropTypes.string,
   text: PropTypes.string,
+  name: PropTypes.string,
 }
 
 AnimatedSelect.defaultProps = {
   onChange: () => {},
   className: '',
   text: 'Authenticate',
+  name: '',
 }
 
 export default AnimatedSelect
