@@ -13,6 +13,7 @@ const initialState = {
   createSignup: false,
   createSignin: false,
   authenticateOption: '',
+  showAlert: false,
 }
 
 const reducer = (state, action) => {
@@ -46,6 +47,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         authenticateOption: action.payload,
+      }
+    case 'SET_ALERT':
+      return {
+        ...state,
+        showAlert: action.payload,
       }
     default:
       return state

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable radix */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState, useRef, useEffect } from 'react'
@@ -50,7 +52,7 @@ function CreatePostModal({ createPost, setCreatePost, categories, tags }) {
   const handleTagChange = (tagId) => {
     const updatedTagIds = blogData.tagIds.includes(tagId)
       ? blogData.tagIds.filter((id) => id !== tagId)
-      : [...blogData.tagIds, tagId]
+      : [...blogData.tagIds, parseInt(tagId, 10)]
 
     setBlogData({ ...blogData, tagIds: updatedTagIds })
   }
@@ -58,11 +60,18 @@ function CreatePostModal({ createPost, setCreatePost, categories, tags }) {
   const handleCreateBlog = async (e) => {
     e.preventDefault()
     const data = new FormData()
-    data.append('file', image)
-    data.append('title', blogData.title)
-    data.append('description', blogData.description)
-    data.append('categoryId', blogData.categoryId)
-    data.append('tagIds', blogData.tagIds)
+    data.file = image
+    data.title = blogData.title
+    data.description = blogData.description
+    data.categoryId = parseInt(blogData?.categoryId, 10)
+    data.tagIds = blogData?.tagIds.map((id) => parseInt(id, 10))
+    // data.append('file', image);
+    // data.append('title', blogData?.title);
+    // data.append('description', blogData?.description);
+    // data.append('categoryId', parseInt(blogData?.categoryId, 10));
+    // data.append('tagIds', blogData?.tagIds.map((id) => parseInt(id, 10)));
+
+    // console.log("form data", data)
 
     dispatch(createBlogPost(data))
   }

@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 import React, {
   useCallback,
@@ -28,6 +30,7 @@ import CreateTagModal from '../tag/CreateTagModal'
 import { fetchTags } from '../../slices/getTagsSlice'
 import { fetchCategories } from '../../slices/getCategoriesSlice'
 import CreatePostModal from '../postmodal/CreatePostModal'
+import AlertModal from '../alert/AlertModal'
 
 function Header() {
   const appDispatch = useDispatch()
@@ -38,12 +41,16 @@ function Header() {
   const [createPost, setCreatePost] = useState(false)
   const [createCat, setCreateCat] = useState(false)
   const [createTag, setCreateTag] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
   const [authenticatedUser, setAuthenticatedUser] = useState()
   const token = useMemo(() => getCookie('token'), [])
   const tokenExpiration = useMemo(
     () => (token ? parseTokenExpiration(token) : ''),
     [token],
   )
+  const createdTag = useSelector((state) => state.createTag)
+  const createdCategory = useSelector((state) => state.createCategory)
+  const createdPost = useSelector((state) => state.createBlogPost)
   const tags = useSelector((state) => state.tags)
   const categories = useSelector((state) => state.categories)
   const modifiedCategories = useMemo(() => {
@@ -83,6 +90,7 @@ function Header() {
       setAuthenticatedUser(decodedUser)
     }
   }, [tokenExpiration, token])
+
   useEffect(() => {
     handleAuthenticatedUser()
   }, [handleAuthenticatedUser])
@@ -90,6 +98,23 @@ function Header() {
   const handleSearchToggle = () => {
     dispatch({ type: 'SET_SEARCH', payload: !state.isSearch })
   }
+
+  useEffect(() => {
+    if (createdTag.status === 'succeeded') {
+      setShowAlert(true)
+    }
+    if (createdCategory.status === 'succeeded') {
+      setShowAlert(true)
+    }
+    if (createdPost.status === 'succeeded') {
+      setShowAlert(true)
+    }
+  }, [
+    createdTag.status,
+    setShowAlert,
+    createdCategory.status,
+    createdPost.status,
+  ])
 
   const handleSearchInputChange = (event) => {
     dispatch({ type: 'SET_SEARCH_VALUE', payload: event.target.value })
@@ -452,6 +477,19 @@ function Header() {
         setCreatePost={setCreatePost}
         categories={modifiedCategories}
         tags={tags?.tags}
+      />
+      <AlertModal
+        showAlert={showAlert}
+        text={
+          createdTag.status === 'succeeded'
+            ? 'Tag Created!'
+            : createdCategory.status === 'succeeded'
+              ? 'Category Created!'
+              : createdPost.status === 'succeeded'
+                ? 'Blog Post Created!'
+                : ''
+        }
+        setShowAlert={setShowAlert}
       />
     </motion.div>
   )

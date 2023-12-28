@@ -24,7 +24,6 @@ function SigninModal({ createSignin, setCreateSignin }) {
   useEffect(() => {
     if (auth.token) {
       setCreateSignin(false)
-      navigate('/blog')
     }
   }, [auth.token, setCreateSignin, navigate])
 
