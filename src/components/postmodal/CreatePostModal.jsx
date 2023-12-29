@@ -60,18 +60,12 @@ function CreatePostModal({ createPost, setCreatePost, categories, tags }) {
   const handleCreateBlog = async (e) => {
     e.preventDefault()
     const data = new FormData()
-    data.file = image
-    data.title = blogData.title
-    data.description = blogData.description
-    data.categoryId = parseInt(blogData?.categoryId, 10)
-    data.tagIds = blogData?.tagIds.map((id) => parseInt(id, 10))
-    // data.append('file', image);
-    // data.append('title', blogData?.title);
-    // data.append('description', blogData?.description);
-    // data.append('categoryId', parseInt(blogData?.categoryId, 10));
-    // data.append('tagIds', blogData?.tagIds.map((id) => parseInt(id, 10)));
-
-    // console.log("form data", data)
+    data.append('file', image)
+    data.append('title', blogData?.title)
+    data.append('description', blogData?.description)
+    data.append('categoryId', parseInt(blogData?.categoryId, 10))
+    const tagIdsArray = blogData?.tagIds || []
+    data.append('tagIds', JSON.stringify(tagIdsArray))
 
     dispatch(createBlogPost(data))
   }
