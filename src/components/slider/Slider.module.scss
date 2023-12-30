@@ -1,0 +1,53 @@
+@import '../../styles//variables.scss';
+
+.slider__container {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adjust the shadow as needed */
+  border-radius: $borderRadius;
+  box-sizing: border-box;
+  width: 100%;
+
+  &:first-child {
+    margin-right: 0;
+  }
+
+  &__img {
+    max-width: 100%; // Set the maximum width to the container width
+    max-height: 100%; // Set the maximum height to the container height
+    width: auto; // Ensure the width is responsive
+    height: 200px; // Ensure the same height
+    border-radius: $borderRadius;
+  }
+
+  &__title {
+    font-size: 20px;
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  &__description {
+    font-size: 13px;
+    text-align: justify;
+    height: 150px;
+  }
+
+  &__more__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    padding: 13px;
+    background-color: #7c4ee4;
+    color: white;
+    text-transform: uppercase;
+    border-radius: $borderRadius;
+    border: none;
+    font-weight: bold;
+    width: 40%;
+  }
+}

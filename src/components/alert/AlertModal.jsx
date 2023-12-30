@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 import PropTypes from 'prop-types'
@@ -50,6 +51,7 @@ function AlertModal({ showAlert, setShowAlert, text }) {
           className={classes.alert__body__btn}
           onClick={() => {
             setShowAlert(false)
+            window.location.reload()
           }}
         />
       </Modal.Body>

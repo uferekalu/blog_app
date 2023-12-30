@@ -5,7 +5,10 @@ import { baseUrl } from './api'
 export const fetchPosts = createAsyncThunk('blog/fetchPosts', async () => {
   const response = await fetch(`${baseUrl}/posts`)
   const data = await response.json()
-  return data
+  const sortedData = data
+    .slice(1)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  return sortedData
 })
 
 const blogSlice = createSlice({
