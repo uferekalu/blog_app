@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -44,6 +45,7 @@ function CreateCategoryModal({ createCat, setCreateCat }) {
       show={createCat}
       onHide={() => {
         setCreateCat(false)
+        window.location.reload()
       }}
       className={classes.create__category}
       style={{ backgroundImage: `url(${signupBg})` }}

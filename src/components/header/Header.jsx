@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
@@ -76,7 +77,7 @@ function Header() {
   useEffect(() => {
     if (state.authenticateOption === 'signout') {
       appDispatch(clearToken())
-      navigate('/')
+      window.location.reload()
     }
   }, [appDispatch, navigate, state.authenticateOption, token])
 

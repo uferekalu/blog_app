@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -58,6 +59,7 @@ function SignupModal({ createSignup, setCreateSignup, setCreateSignin }) {
       show={createSignup}
       onHide={() => {
         setCreateSignup(false)
+        window.location.reload()
       }}
       className={classes.create__signup}
       style={{ backgroundImage: `url(${signupBg})` }}

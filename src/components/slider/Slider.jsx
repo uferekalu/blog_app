@@ -9,6 +9,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import classes from './Slider.module.scss'
 import AnimatedButton from '../button/AnimatedButton'
+import { formatDate } from '../../utils/cookieUtils'
 
 function BlogSlider({ slides }) {
   const sliderSettings = {
@@ -21,13 +22,19 @@ function BlogSlider({ slides }) {
     slidesToScroll: 1,
     responsive: [
       {
+        breakpoint: 1000,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
         breakpoint: 768,
         settings: {
           slidesToShow: 2,
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 600,
         settings: {
           slidesToShow: 1,
         },
@@ -66,21 +73,38 @@ function BlogSlider({ slides }) {
                 animate={{ rotateY: 360 }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
               />
-              <motion.h2
+              <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                className={classes.slider__container__title}
+                className={classes.slider__container__title__date}
               >
-                {slide.title}
-              </motion.h2>
+                <motion.h2
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className={classes.slider__container__title__date__title}
+                >
+                  {slide.title}
+                </motion.h2>
+                <motion.span
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className={classes.slider__container__title__date__dt}
+                >
+                  {formatDate(slide.createdAt)}
+                </motion.span>
+              </motion.div>
               <motion.p
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
                 className={classes.slider__container__description}
               >
-                {slide.description}
+                {slide.description.length > 170
+                  ? `${slide.description.slice(0, 170)}.....`
+                  : slide.description}
               </motion.p>
               <AnimatedButton
                 type="button"

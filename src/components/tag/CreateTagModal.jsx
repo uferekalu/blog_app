@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -44,6 +45,7 @@ function CreateTagModal({ createTag, setCreateTag }) {
       show={createTag}
       onHide={() => {
         setCreateTag(false)
+        window.location.reload()
       }}
       className={classes.create__tag}
       style={{ backgroundImage: `url(${signupBg})` }}

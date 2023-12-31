@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,6 +25,7 @@ function SigninModal({ createSignin, setCreateSignin }) {
   useEffect(() => {
     if (auth.token) {
       setCreateSignin(false)
+      window.location.reload()
     }
   }, [auth.token, setCreateSignin, navigate])
 
@@ -48,6 +50,7 @@ function SigninModal({ createSignin, setCreateSignin }) {
       show={createSignin}
       onHide={() => {
         setCreateSignin(false)
+        window.location.reload()
       }}
       className={classes.create__signin}
       style={{ backgroundImage: `url(${signupBg})` }}

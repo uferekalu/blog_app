@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable radix */
 /* eslint-disable react/forbid-prop-types */
@@ -76,6 +77,7 @@ function CreatePostModal({ createPost, setCreatePost, categories, tags }) {
       show={createPost}
       onHide={() => {
         setCreatePost(false)
+        window.location.reload()
       }}
       className={classes.create__blogPost}
       style={{ backgroundImage: `url(${signupBg})` }}

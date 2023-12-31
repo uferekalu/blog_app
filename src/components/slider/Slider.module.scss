@@ -22,18 +22,30 @@
     border-radius: $borderRadius;
   }
 
-  &__title {
-    font-size: 20px;
-    color: black;
-    text-transform: uppercase;
-    font-weight: bold;
-    margin-top: 10px;
+  &__title__date {
+    display: flex;
+    gap: 20px;
+ 
+    &__title {
+      font-size: 20px;
+      color: black;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    &__dt {
+      font-size: 12px;
+      color: gray;
+      font-weight: bold;
+      margin-top: 10px;
+    }
   }
 
   &__description {
     font-size: 13px;
     text-align: justify;
-    height: 150px;
+    height: 110px;
   }
 
   &__more__btn {
@@ -41,7 +53,7 @@
     justify-content: center;
     align-items: center;
     font-size: 13px;
-    padding: 13px;
+    padding: 6px;
     background-color: #7c4ee4;
     color: white;
     text-transform: uppercase;
@@ -49,5 +61,6 @@
     border: none;
     font-weight: bold;
     width: 40%;
+    margin-top: 20px;
   }
 }
