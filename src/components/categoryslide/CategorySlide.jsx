@@ -9,7 +9,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import classes from './CategorySlide.module.scss'
 
-function CategorySlide({ slides }) {
+function CategorySlide({ slides, handleCategoryDetails, categoryId }) {
   const sliderSettings = {
     dots: true,
     autoplay: true,
@@ -59,14 +59,26 @@ function CategorySlide({ slides }) {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              style={{
-                padding: '20px',
-                boxSizing: 'border-box',
-                width: '90%',
-                margin: '0 auto',
-                marginTop: '40px',
-              }}
+              style={
+                categoryId === slide?.id
+                  ? {
+                      padding: '20px',
+                      boxSizing: 'border-box',
+                      width: '90%',
+                      margin: '0 auto',
+                      marginTop: '40px',
+                      backgroundColor: 'teal',
+                    }
+                  : {
+                      padding: '20px',
+                      boxSizing: 'border-box',
+                      width: '90%',
+                      margin: '0 auto',
+                      marginTop: '40px',
+                    }
+              }
               className={classes.slider__container}
+              onClick={() => handleCategoryDetails(slide?.id)}
             >
               <motion.img
                 src={slide.image}
@@ -81,6 +93,15 @@ function CategorySlide({ slides }) {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
                 className={classes.slider__container__name}
+                style={
+                  categoryId === slide?.id
+                    ? {
+                        color: 'white',
+                      }
+                    : {
+                        color: 'black',
+                      }
+                }
               >
                 {slide.name}
               </motion.div>
@@ -112,6 +133,8 @@ CategorySlide.propTypes = {
       ).isRequired,
     }),
   ).isRequired,
+  handleCategoryDetails: PropTypes.func.isRequired,
+  categoryId: PropTypes.number.isRequired,
 }
 
 export default CategorySlide

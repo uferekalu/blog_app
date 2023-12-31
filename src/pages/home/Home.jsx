@@ -34,6 +34,18 @@ function Home() {
   const categories = useSelector((state) => state.categories)
   const [categoriesData, setCategoriesData] = useState([])
   const [isCategorySlide, setIsCategorySlide] = useState(false)
+  const [categoryId, setCategoryId] = useState(null)
+  const [featuredArticles, setFeaturedArticles] = useState([])
+
+  console.log('category id', categoryId)
+  console.log('featured articles', featuredArticles)
+
+  const handleCategoryDetails = (id) => {
+    setCategoryId(id)
+    const category = categoriesData?.find((cat) => cat.id === id)
+    const categoryPosts = category?.posts
+    setFeaturedArticles(categoryPosts)
+  }
 
   const handleCategorySlide = () => {
     setIsCategorySlide((prevState) => !prevState)
@@ -185,7 +197,13 @@ function Home() {
             {isCategorySlide ? 'Categories' : 'See All Categories >'}
           </motion.div>
         </motion.div>
-        {isCategorySlide && <CategorySlide slides={categoriesData} />}
+        {isCategorySlide && (
+          <CategorySlide
+            slides={categoriesData}
+            handleCategoryDetails={handleCategoryDetails}
+            categoryId={categoryId}
+          />
+        )}
         {!isCategorySlide && (
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -202,6 +220,16 @@ function Home() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
                 className={classes.homepage__category__content__details}
+                onClick={() => handleCategoryDetails(category?.id)}
+                style={
+                  categoryId === category.id
+                    ? {
+                        backgroundColor: 'teal',
+                      }
+                    : {
+                        backgroundColor: 'white',
+                      }
+                }
               >
                 <motion.img
                   src={category.image}
@@ -216,6 +244,15 @@ function Home() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5 }}
                   className={classes.homepage__category__content__details__name}
+                  style={
+                    categoryId === category.id
+                      ? {
+                          color: 'white',
+                        }
+                      : {
+                          color: 'black',
+                        }
+                  }
                 >
                   {category.name}
                 </motion.div>
