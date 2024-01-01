@@ -1,0 +1,36 @@
+@import '../../styles/variables.scss';
+
+.alert {
+  display: block;
+  border-radius: $borderRadius;
+  background-size: cover;
+  background-position: center;
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    gap: 12px;
+
+    &__text {
+      font-size: 15px;
+      background-color: white;
+      color: black;
+      padding: 10px;
+      border-radius: $borderRadius;
+    }
+
+    &__btn {
+      background-color: rgb(14, 212, 212);
+      color: black;
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+    }
+  }
+}
