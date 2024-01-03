@@ -29,7 +29,8 @@ function SignupModal({ createSignup, setCreateSignup, setCreateSignin }) {
     }
   }, [auth.signUpSuccess, setCreateSignup, setCreateSignin])
 
-  const handleChooseFileClick = () => {
+  const handleChooseFileClick = (e) => {
+    e.preventDefault()
     fileInputRef.current.click()
   }
 
@@ -71,6 +72,7 @@ function SignupModal({ createSignup, setCreateSignup, setCreateSignin }) {
         <motion.form
           className={classes.signup__form}
           encType="multipart/form-data"
+          method="POST"
         >
           <motion.div
             initial={{ opacity: 0, x: -50 }}

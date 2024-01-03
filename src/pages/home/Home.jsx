@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-nested-ternary */
@@ -18,6 +19,7 @@ import devops from '../../images/devops.jpeg'
 import linux from '../../images/linux.png'
 import latestpost from '../../images/latestpost.jpg'
 import catbg from '../../images/catbg.jpg'
+import featuredBg from '../../images/featured.jpg'
 import databases from '../../images/database.png'
 import algorithms from '../../images/algorithm.png'
 import cloud from '../../images/cloudcomp.jpg'
@@ -27,6 +29,8 @@ import AnimatedButton from '../../components/button/AnimatedButton'
 import BlogSlider from '../../components/slider/Slider'
 import { fetchPosts } from '../../slices/getBlogPostsSlice'
 import CategorySlide from '../../components/categoryslide/CategorySlide'
+import PulseAnimation from '../../components/pulseAnimation/PulseAnimation'
+import BlogCard from '../../components/blogCard/BlogCard'
 
 function Home() {
   const dispatch = useDispatch()
@@ -34,21 +38,32 @@ function Home() {
   const categories = useSelector((state) => state.categories)
   const [categoriesData, setCategoriesData] = useState([])
   const [isCategorySlide, setIsCategorySlide] = useState(false)
+  const [isFeaturedSlide, setIsFeaturedSlide] = useState(false)
   const [categoryId, setCategoryId] = useState(null)
   const [featuredArticles, setFeaturedArticles] = useState([])
 
-  console.log('category id', categoryId)
-  console.log('featured articles', featuredArticles)
+  console.log('featuredArticles', featuredArticles)
 
-  const handleCategoryDetails = (id) => {
-    setCategoryId(id)
-    const category = categoriesData?.find((cat) => cat.id === id)
-    const categoryPosts = category?.posts
-    setFeaturedArticles(categoryPosts)
-  }
+  const handleCategoryDetails = useCallback(
+    (id) => {
+      setCategoryId(id)
+      const category = categoriesData?.find((cat) => cat.id === id)
+      const categoryPosts = category?.posts
+      setFeaturedArticles(categoryPosts)
+    },
+    [categoriesData],
+  )
+
+  useEffect(() => {
+    handleCategoryDetails(1)
+  }, [handleCategoryDetails])
 
   const handleCategorySlide = () => {
     setIsCategorySlide((prevState) => !prevState)
+  }
+
+  const handleFeaturedSlide = () => {
+    setIsFeaturedSlide((prevState) => !prevState)
   }
 
   useEffect(() => {
@@ -147,7 +162,7 @@ function Home() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
         className={classes.homepage__latestpost}
-        style={{ backgroundImage: `url(${latestpost})`, height: '700px' }}
+        style={{ backgroundImage: `url(${latestpost})` }}
       >
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -164,6 +179,8 @@ function Home() {
             Latest Posts
           </motion.div>
         </motion.div>
+        {posts?.posts.length <= 0 && <PulseAnimation />}
+        {posts?.status === 'loading' && <PulseAnimation />}
         <BlogSlider slides={posts.posts} />
       </motion.div>
       <motion.div
@@ -197,6 +214,8 @@ function Home() {
             {isCategorySlide ? 'Categories' : 'See All Categories >'}
           </motion.div>
         </motion.div>
+        {categories?.categories.length <= 0 && <PulseAnimation />}
+        {categories?.status === 'loading' && <PulseAnimation />}
         {isCategorySlide && (
           <CategorySlide
             slides={categoriesData}
@@ -261,6 +280,92 @@ function Home() {
           </motion.div>
         )}
       </motion.div>
+      {featuredArticles?.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className={classes.homepage__featured__articles}
+          style={{
+            backgroundImage: `url(${featuredBg})`,
+            maxWidth: '100%',
+            overflow: 'hidden',
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className={classes.homepage__featured__articles__heading__container}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className={
+                classes.homepage__featured__articles__heading__container__text
+              }
+            >
+              Featured Articles ------
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className={
+                classes.homepage__featured__articles__heading__container__text
+              }
+              onClick={handleFeaturedSlide}
+            >
+              {isFeaturedSlide ? 'Featured Articles' : 'See All Articles >'}
+            </motion.div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className={classes.homepage__featured__articles__content}
+          >
+            {!isFeaturedSlide &&
+              (featuredArticles?.length > 4
+                ? featuredArticles
+                    ?.slice(0, 4)
+                    .map((article) => (
+                      <BlogCard key={article.id} post={article} />
+                    ))
+                : featuredArticles?.map((article) => (
+                    <BlogCard post={article} />
+                  )))}
+          </motion.div>
+        </motion.div>
+      )}
+      {featuredArticles?.length === 0 && (
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className={classes.homepage__featured__articles}
+          style={{
+            backgroundImage: `url(${featuredBg})`,
+            maxWidth: '100%',
+            overflow: 'hidden',
+            padding: '20px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: 'white',
+            fontWeight: 'bold',
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            No featured articles
+          </motion.div>
+        </motion.div>
+      )}
     </>
   )
 }

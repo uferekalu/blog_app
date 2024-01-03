@@ -36,7 +36,8 @@ function CreatePostModal({ createPost, setCreatePost, categories, tags }) {
     }
   }, [createdPost.blogPost, setCreatePost])
 
-  const handleChooseFileClick = () => {
+  const handleChooseFileClick = (e) => {
+    e.preventDefault()
     fileInputRef.current.click()
   }
 
@@ -89,6 +90,7 @@ function CreatePostModal({ createPost, setCreatePost, categories, tags }) {
         <motion.form
           className={classes.blogPost__form}
           encType="multipart/form-data"
+          method="POST"
         >
           <motion.div
             initial={{ opacity: 0, x: -50 }}

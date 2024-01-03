@@ -3,13 +3,16 @@
 .blog__card {
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
-  margin: 20px;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: $borderRadius;
   overflow: hidden;
   width: 100%;
 
   &__post__image {
-    height: 50%;
+    height: 200px;
+    width: 75%;
+    margin: auto;
     background-size: cover;
     background-position: center;
   }
@@ -20,51 +23,92 @@
     display: flex;
     flex-direction: column;
 
-    &__post__btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: none;
-      background: blue;
-      color: $light;
-      padding: $padding;
+    &__title {
+      font-size: 13px;
+      padding: 10px;
+      background-color: rgb(0, 0, 0);
+      color: white;
+      width: fit-content;
       border-radius: $borderRadius;
+      text-align: justify;
     }
-  }
 
-  &__post__details h2 {
-    margin-bottom: 10px;
+    &__description {
+      font-size: 13px;
+      padding: 10px;
+      background-color: rgb(0, 0, 0);
+      color: white;
+      width: fit-content;
+      border-radius: $borderRadius;
+      text-align: justify;
+      height: 110px;
+    }
   }
 
   &__creator__details {
-    padding: 15px;
-    background-color: #f5f5f5;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    padding: 10px;
 
-    &__tags {
+    &__holder {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
+      gap: 10px;
 
-      &__heading {
-        font-size: 10px;
-        font-weight: bold;
+      &__img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
       }
 
-      &__text {
-        display: flex;
-        font-size: 10px;
+      &__time {
+        font-size: 12px;
+        color: black;
+        margin-top: 20px;
       }
     }
   }
 
-  &__creator-details img {
-    border-radius: 50%;
-    margin-right: 10px;
-    width: 40px;
-    height: 40px;
+  &__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    padding: 6px;
+    background-color: #7c4ee4;
+    color: white;
+    text-transform: uppercase;
+    border-radius: $borderRadius;
+    border: none;
+    font-weight: bold;
+    width: 100%;
+  }
+
+  &__creator__details__tags__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    padding: 10px;
+    margin-top: 30px;
+    padding-bottom: 30px;
+    cursor: pointer;
+
+    @media screen and (min-width: 450px) and (max-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+      /* height: 110vh; */
+    }
+    @media screen and (min-width: 768px) and (max-width: 1000px) {
+      grid-template-columns: 1fr 1fr 1fr;
+      /* height: 110vh; */
+    }
+    &__text {
+      padding: 4px;
+      font-size: 10px;
+      color: white;
+      background-color: teal;
+      border-radius: $borderRadius;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }

@@ -1,0 +1,12 @@
+@import '../../styles/variables.scss';
+
+.featured__slide {
+    padding-bottom: 30px;
+}
+
+.featured__slide__container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 100%;
+}
