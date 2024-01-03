@@ -1,0 +1,11 @@
+@import '../../styles/variables.scss';
+
+.feature__slide {
+    padding-bottom: 30px;
+}
+
+.feature__slide__container {
+    display: flex;
+    gap: 10px;
+    padding-left: 10px;
+}

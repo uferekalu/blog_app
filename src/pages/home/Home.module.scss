@@ -187,6 +187,8 @@
   border-radius: $borderRadius;
   background-size: cover;
   background-position: center;
+  display: flex;
+  flex-direction: column;
 
   &__heading__container {
     display: flex;

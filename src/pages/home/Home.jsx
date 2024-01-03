@@ -31,6 +31,7 @@ import { fetchPosts } from '../../slices/getBlogPostsSlice'
 import CategorySlide from '../../components/categoryslide/CategorySlide'
 import PulseAnimation from '../../components/pulseAnimation/PulseAnimation'
 import BlogCard from '../../components/blogCard/BlogCard'
+import FeaturedSlide from '../../components/featurestlide/FeatureSlide'
 
 function Home() {
   const dispatch = useDispatch()
@@ -41,8 +42,6 @@ function Home() {
   const [isFeaturedSlide, setIsFeaturedSlide] = useState(false)
   const [categoryId, setCategoryId] = useState(null)
   const [featuredArticles, setFeaturedArticles] = useState([])
-
-  console.log('featuredArticles', featuredArticles)
 
   const handleCategoryDetails = useCallback(
     (id) => {
@@ -320,14 +319,23 @@ function Home() {
               {isFeaturedSlide ? 'Featured Articles' : 'See All Articles >'}
             </motion.div>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className={classes.homepage__featured__articles__content}
-          >
-            {!isFeaturedSlide &&
-              (featuredArticles?.length > 4
+          {isFeaturedSlide && (
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <FeaturedSlide articles={featuredArticles} />
+            </motion.div>
+          )}
+          {!isFeaturedSlide && (
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className={classes.homepage__featured__articles__content}
+            >
+              {featuredArticles?.length > 4
                 ? featuredArticles
                     ?.slice(0, 4)
                     .map((article) => (
@@ -335,8 +343,9 @@ function Home() {
                     ))
                 : featuredArticles?.map((article) => (
                     <BlogCard post={article} />
-                  )))}
-          </motion.div>
+                  ))}
+            </motion.div>
+          )}
         </motion.div>
       )}
       {featuredArticles?.length === 0 && (

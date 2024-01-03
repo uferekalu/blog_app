@@ -57,7 +57,7 @@ function BlogCard({ post }) {
               transition={{ duration: 0.5 }}
               className={classes.blog__card__creator__details__holder__time}
             >
-              Created {getTimeAgo(post?.createdAt)}
+              {getTimeAgo(post?.createdAt)}
             </motion.span>
           </motion.div>
           <motion.div
@@ -66,23 +66,38 @@ function BlogCard({ post }) {
             transition={{ duration: 0.5 }}
             className={classes.blog__card__creator__details__tags__content}
           >
-            {post?.tags?.map((tag) => (
-              <motion.span
-                key={tag.id}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                className={
-                  classes.blog__card__creator__details__tags__content__text
-                }
-              >
-                {tag?.name}
-              </motion.span>
-            ))}
+            {post?.tags?.length > 4
+              ? post?.tags?.slice(0, 4).map((tag) => (
+                  <motion.span
+                    key={tag.id}
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className={
+                      classes.blog__card__creator__details__tags__content__text
+                    }
+                  >
+                    {tag?.name}
+                  </motion.span>
+                ))
+              : post?.tags?.map((tag) => (
+                  <motion.span
+                    key={tag.id}
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className={
+                      classes.blog__card__creator__details__tags__content__text
+                    }
+                  >
+                    {tag?.name}
+                  </motion.span>
+                ))}
           </motion.div>
         </motion.div>
       </motion.div>
       <AnimatedButton
+        type="button"
         text="More Details"
         onClick={() => {}}
         className={classes.blog__card__btn}
