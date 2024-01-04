@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   height: 10vh;
-  padding: 30px;
+  padding: 30px 30px 30px 10px;
 
   &__logo__container {
     display: flex;
@@ -164,4 +164,12 @@
       }
     }
   }
+}
+
+.notfound {
+  border-radius: $borderRadius;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  
 }

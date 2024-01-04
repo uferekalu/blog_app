@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-undef */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-vars */
@@ -10,6 +12,7 @@ import React, {
   useState,
 } from 'react'
 import { motion } from 'framer-motion'
+import _debounce from 'lodash/debounce'
 import { useDispatch, useSelector } from 'react-redux'
 import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
@@ -32,10 +35,15 @@ import { fetchTags } from '../../slices/getTagsSlice'
 import { fetchCategories } from '../../slices/getCategoriesSlice'
 import CreatePostModal from '../postmodal/CreatePostModal'
 import AlertModal from '../alert/AlertModal'
+import { fetchPosts } from '../../slices/getBlogPostsSlice'
+import SearchContent from '../searchcontent/SearchContent'
+import signupBg from '../../images/signup.jpg'
 
 function Header() {
   const appDispatch = useDispatch()
   const navigate = useNavigate()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchResults, setSearchResults] = useState([])
   const { state, dispatch } = useContext(AppContext)
   const [createSignup, setCreateSignup] = useState(false)
   const [createSignin, setCreateSignin] = useState(false)
@@ -43,6 +51,7 @@ function Header() {
   const [createCat, setCreateCat] = useState(false)
   const [createTag, setCreateTag] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
+  const [searchComp, setSearchComp] = useState(false)
   const [authenticatedUser, setAuthenticatedUser] = useState()
   const token = useMemo(() => getCookie('token'), [])
   const tokenExpiration = useMemo(
@@ -54,6 +63,8 @@ function Header() {
   const createdPost = useSelector((state) => state.createBlogPost)
   const tags = useSelector((state) => state.tags)
   const categories = useSelector((state) => state.categories)
+
+  const posts = useSelector((state) => state.blog)
   const modifiedCategories = useMemo(() => {
     const result = categories?.categories.map((cat) => ({
       value: cat?.id.toString(),
@@ -61,6 +72,30 @@ function Header() {
     }))
     return result
   }, [categories])
+
+  useEffect(() => {
+    appDispatch(fetchPosts())
+  }, [appDispatch])
+
+  const searchFunction = useCallback(
+    _debounce(async () => {
+      if (searchTerm.trim() === '') {
+        // If search term is empty, set searchResults to an empty array
+        setSearchResults([])
+      } else if (posts && posts.posts) {
+        // Perform search and update searchResults
+        const filteredResults = posts.posts.filter((post) =>
+          post.title.toLowerCase().includes(searchTerm.toLowerCase()),
+        )
+        setSearchResults(filteredResults)
+      }
+    }, 500),
+    [searchTerm, posts],
+  )
+
+  useEffect(() => {
+    searchFunction()
+  }, [searchFunction])
 
   useEffect(() => {
     appDispatch(fetchTags())
@@ -98,6 +133,10 @@ function Header() {
 
   const handleSearchToggle = () => {
     dispatch({ type: 'SET_SEARCH', payload: !state.isSearch })
+    if (!state.isSearch) {
+      setSearchTerm('')
+      setSearchComp(false)
+    }
   }
 
   useEffect(() => {
@@ -117,9 +156,18 @@ function Header() {
     createdPost.status,
   ])
 
-  const handleSearchInputChange = (event) => {
-    dispatch({ type: 'SET_SEARCH_VALUE', payload: event.target.value })
-  }
+  useEffect(() => {
+    if (searchTerm && state.isSearch) {
+      setSearchComp(true)
+    } else {
+      setSearchResults([])
+      setSearchComp(false)
+    }
+  }, [searchTerm, state.isSearch])
+
+  // const handleSearchInputChange = (event) => {
+  //   dispatch({ type: 'SET_SEARCH_VALUE', payload: event.target.value })
+  // }
 
   const handleMenuToggle = () => {
     dispatch({ type: 'SET_MENU_OPEN', payload: !state.isMenuOpen })
@@ -203,11 +251,11 @@ function Header() {
           <>
             <AnimatedInput
               type="text"
-              placeholder="Search..."
-              name=""
+              placeholder="Search for post..."
+              name="searchTerm"
               className={classes.header__link__container__search}
-              value={state.searchValue}
-              onChange={handleSearchInputChange}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
             <motion.i
               onClick={handleSearchToggle}
@@ -285,11 +333,11 @@ function Header() {
           <>
             <AnimatedInput
               type="text"
-              placeholder="Search..."
-              name=""
+              placeholder="Search for posts..."
+              name="searchTerm"
               className={classes.header__link__container__search}
-              value={state.searchValue}
-              onChange={handleSearchInputChange}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
             <motion.i
               onClick={handleSearchToggle}
@@ -462,6 +510,77 @@ function Header() {
           </motion.div>
         </motion.div>
       </motion.div>
+      <motion.div
+        style={{
+          position: 'fixed',
+          top: '14%',
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'rgba(0, 0, 0, 0.5)', // Adjust the opacity as needed
+          zIndex: 99, // Place it below the centered div
+          display: searchComp ? 'block' : 'none', // Show only when search is active
+        }}
+      />
+      {searchResults && searchResults.length === 0 && (
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          style={{
+            display: searchComp ? 'block' : 'none',
+            position: 'fixed', // Change position to fixed
+            top: '15%',
+            left: '20%',
+            transform: 'translate(-50%, -50%)', // Center the element
+            zIndex: 100,
+            borderRadius: '5px',
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{
+              backgroundImage: `url(${signupBg})`,
+              padding: '20px',
+            }}
+            className={classes.notfound}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              style={{
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+                backgroundColor: 'white',
+                color: 'teal',
+                padding: '10px',
+                borderRadius: '5px',
+              }}
+            >
+              No Post Found!!!
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      )}
+      {searchResults.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          style={{
+            display: searchComp ? 'block' : 'none',
+            position: 'fixed', // Change position to fixed
+            top: '15%',
+            left: '20%',
+            transform: 'translate(-50%, -50%)', // Center the element
+            zIndex: 100,
+          }}
+        >
+          <SearchContent posts={searchResults} />
+        </motion.div>
+      )}
       <SignupModal
         createSignup={createSignup}
         setCreateSignup={setCreateSignup}
